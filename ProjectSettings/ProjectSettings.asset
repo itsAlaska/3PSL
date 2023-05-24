@@ -907,12 +907,12 @@ PlayerSettings:
   hmiLogStartupTiming: 0
   hmiCpuConfiguration: 
   apiCompatibilityLevel: 6
-  activeInputHandler: 0
+  activeInputHandler: 2
   windowsGamepadBackendHint: 0
   cloudProjectId: 08927d0a-aa5f-4e35-938c-9048d4e43d0d
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 3PSL (1)
+  projectName: 3PSL
   organizationId: itsalaska
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
