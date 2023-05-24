@@ -4,12 +4,7 @@ namespace StateMachines.Player
     {
         void Start()
         {
-            
-        }
-    
-        void Update()
-        {
-            
+            SwitchState(new PlayerTestState(this));
         }
     }
 }
