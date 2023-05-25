@@ -3,8 +3,8 @@ using UnityEngine;
 namespace StateMachines.Player
 {
     public class PlayerTestState : PlayerBaseState
-    {
-        public float Time = 5;
+    { 
+        float _time;
 
         public PlayerTestState(PlayerStateMachine stateMachine) : base(stateMachine)
         {
@@ -13,21 +13,24 @@ namespace StateMachines.Player
         public override void Enter()
         {
             Debug.Log("Enter");
+            StateMachine.InputReader.JumpEvent += OnJump;
         }
 
         public override void Tick(float deltaTime)
         {
-            Time -= deltaTime;
-            if (Time <= 0)
-            {
-                StateMachine.SwitchState(new PlayerTestState(StateMachine));
-            }
-            Debug.Log(Time);
+            _time += deltaTime;
+            Debug.Log(_time);
         }
 
         public override void Exit()
         {
             Debug.Log("Exit");
+            StateMachine.InputReader.JumpEvent -= OnJump;
+        }
+
+        void OnJump()
+        {
+            StateMachine.SwitchState(new PlayerTestState(StateMachine));
         }
     }
 }
