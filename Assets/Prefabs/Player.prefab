@@ -621,6 +621,7 @@ GameObject:
   - component: {fileID: 8342663378432114538}
   - component: {fileID: 534615770949817915}
   - component: {fileID: 4524113198790202188}
+  - component: {fileID: 1519828396993990846}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -643,7 +644,7 @@ Transform:
   - {fileID: 7836790074353747210}
   - {fileID: 2314840448655006709}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8342663378432114538
 Animator:
@@ -658,7 +659,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: f4c552975c213514fabd49d1a93934d7, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -679,6 +680,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <InputReader>k__BackingField: {fileID: 4524113198790202188}
+  <Controller>k__BackingField: {fileID: 1519828396993990846}
+  <FreeLookMovementSpeed>k__BackingField: 6
 --- !u!114 &4524113198790202188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -691,6 +694,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08959f5628ba0d54db64b73d372ed560, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!143 &1519828396993990846
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4142737761780435928}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 1.83
+  m_Radius: 0.22
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0
+  m_Center: {x: 0, y: 0.915, z: 0}
 --- !u!1 &4394235834280065039
 GameObject:
   m_ObjectHideFlags: 0
