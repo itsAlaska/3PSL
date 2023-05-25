@@ -3,34 +3,29 @@ using UnityEngine;
 namespace StateMachines.Player
 {
     public class PlayerTestState : PlayerBaseState
-    { 
-        float _time;
-
+    {
         public PlayerTestState(PlayerStateMachine stateMachine) : base(stateMachine)
         {
         }
 
         public override void Enter()
         {
-            Debug.Log("Enter");
-            StateMachine.InputReader.JumpEvent += OnJump;
         }
 
         public override void Tick(float deltaTime)
         {
-            _time += deltaTime;
-            Debug.Log(_time);
+            Vector2 movementValue = StateMachine.InputReader.MovementValue;
+            Vector3 movement = new Vector3
+            {
+                x = movementValue.x,
+                y = 0,
+                z = movementValue.y
+            };
+            StateMachine.transform.Translate(movement * deltaTime);
         }
 
         public override void Exit()
         {
-            Debug.Log("Exit");
-            StateMachine.InputReader.JumpEvent -= OnJump;
-        }
-
-        void OnJump()
-        {
-            StateMachine.SwitchState(new PlayerTestState(StateMachine));
         }
     }
 }
