@@ -16,11 +16,7 @@ namespace StateMachines.Player
         public override void Tick(float deltaTime)
         {
             Vector2 movementValue = StateMachine.InputReader.MovementValue;
-            Vector3 movement = new Vector3();
-
-            movement.x = movementValue.x;
-            movement.y = 0;
-            movement.z = movementValue.y;
+            Vector3 movement = CalculateMovement();
 
             StateMachine.Controller.Move(movement * CalculateMovementSpeed(CalculateMovementValue(movementValue)) *
                                          deltaTime);
@@ -38,6 +34,21 @@ namespace StateMachines.Player
 
         public override void Exit()
         {
+        }
+
+        private Vector3 CalculateMovement()
+        {
+            var forward = StateMachine.MainCameraTransform.forward;
+            var right = StateMachine.MainCameraTransform.right;
+
+            forward.y = 0;
+            right.y = 0;
+            
+            forward.Normalize();
+            right.Normalize();
+
+            return forward * StateMachine.InputReader.MovementValue.y +
+                   right * StateMachine.InputReader.MovementValue.x;
         }
 
         // Custom method used to calculate the value for the Animator Blend Tree based on the values received from the
