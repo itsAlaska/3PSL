@@ -1,10 +1,13 @@
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
 namespace StateMachines.Player
 {
     public class PlayerTestState : PlayerBaseState
     {
+        private readonly int _freeLookSpeedHash = Animator.StringToHash("FreeLookSpeed");
+
+        private const float AnimatorDampTime = 0.1f;
+
         public PlayerTestState(PlayerStateMachine stateMachine) : base(stateMachine)
         {
         }
@@ -15,22 +18,23 @@ namespace StateMachines.Player
 
         public override void Tick(float deltaTime)
         {
-            Vector2 movementValue = StateMachine.InputReader.MovementValue;
-            Vector3 movement = CalculateMovement();
+            var movementValue = StateMachine.InputReader.MovementValue;
+            var movement = CalculateMovement();
 
             StateMachine.Controller.Move(movement * CalculateMovementSpeed(CalculateMovementValue(movementValue)) *
                                          deltaTime);
 
             if (StateMachine.InputReader.MovementValue == Vector2.zero)
             {
-                StateMachine.Animator.SetFloat("FreeLookSpeed", 0, 0.1f, deltaTime);
+                StateMachine.Animator.SetFloat(_freeLookSpeedHash, 0, AnimatorDampTime, deltaTime);
                 return;
             }
 
-            // Debug.Log(CalculateMovementValue(movementValue));
-            StateMachine.Animator.SetFloat("FreeLookSpeed", CalculateMovementValue(movementValue), 0.1f, deltaTime);
-            StateMachine.transform.rotation = Quaternion.LookRotation(movement);
+            StateMachine.Animator.SetFloat(_freeLookSpeedHash, CalculateMovementValue(movementValue), AnimatorDampTime,
+                deltaTime);
+            FaceMovementDirection(movement, deltaTime);
         }
+
 
         public override void Exit()
         {
@@ -43,7 +47,7 @@ namespace StateMachines.Player
 
             forward.y = 0;
             right.y = 0;
-            
+
             forward.Normalize();
             right.Normalize();
 
@@ -51,15 +55,24 @@ namespace StateMachines.Player
                    right * StateMachine.InputReader.MovementValue.x;
         }
 
+        private void FaceMovementDirection(Vector3 movement, float deltaTime)
+        {
+            StateMachine.transform.rotation =
+                Quaternion.Lerp(StateMachine.transform.rotation, 
+                    Quaternion.LookRotation(movement),
+                    deltaTime * StateMachine.RotationDamping);
+        }
+
         // Custom method used to calculate the value for the Animator Blend Tree based on the values received from the
         // input.
-        float CalculateMovementValue(Vector2 movementValue)
+        private float CalculateMovementValue(Vector2 movementValue)
         {
-            return Mathf.Abs(Mathf.Abs(movementValue.x) > Mathf.Abs(movementValue.y) ? movementValue.x : movementValue.y);
+            return Mathf.Abs(
+                Mathf.Abs(movementValue.x) > Mathf.Abs(movementValue.y) ? movementValue.x : movementValue.y);
         }
 
         // Custom method that will alter the speed which the player moves based on the values received from the input.
-        float CalculateMovementSpeed(float divisor)
+        private float CalculateMovementSpeed(float divisor)
         {
             return StateMachine.FreeLookMovementSpeed * divisor;
         }
