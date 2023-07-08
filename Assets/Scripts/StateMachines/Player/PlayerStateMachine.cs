@@ -17,7 +17,7 @@ namespace StateMachines.Player
         {
             if (Camera.main != null) MainCameraTransform = Camera.main.transform;
 
-            SwitchState(new PlayerTestState(this));
+            SwitchState(new PlayerFreeLookState(this));
         }
     }
 }
