@@ -21,7 +21,7 @@ namespace StateMachines.Player
             var movementValue = StateMachine.InputReader.MovementValue;
             var movement = CalculateMovement();
 
-            StateMachine.Controller.Move(movement * CalculateMovementSpeed(CalculateMovementValue(movementValue)) *
+            StateMachine.Controller.Move(movement * (StateMachine.FreeLookMovementSpeed * movementValue.magnitude) *
                                          deltaTime);
 
             if (StateMachine.InputReader.MovementValue == Vector2.zero)
@@ -30,7 +30,7 @@ namespace StateMachines.Player
                 return;
             }
 
-            StateMachine.Animator.SetFloat(_freeLookSpeedHash, CalculateMovementValue(movementValue), AnimatorDampTime,
+            StateMachine.Animator.SetFloat(_freeLookSpeedHash, movementValue.magnitude, AnimatorDampTime,
                 deltaTime);
             FaceMovementDirection(movement, deltaTime);
         }
@@ -61,20 +61,6 @@ namespace StateMachines.Player
                 Quaternion.Lerp(StateMachine.transform.rotation, 
                     Quaternion.LookRotation(movement),
                     deltaTime * StateMachine.RotationDamping);
-        }
-
-        // Custom method used to calculate the value for the Animator Blend Tree based on the values received from the
-        // input.
-        private float CalculateMovementValue(Vector2 movementValue)
-        {
-            return Mathf.Abs(
-                Mathf.Abs(movementValue.x) > Mathf.Abs(movementValue.y) ? movementValue.x : movementValue.y);
-        }
-
-        // Custom method that will alter the speed which the player moves based on the values received from the input.
-        private float CalculateMovementSpeed(float divisor)
-        {
-            return StateMachine.FreeLookMovementSpeed * divisor;
         }
     }
 }
