@@ -20,6 +20,17 @@ namespace StateMachines.Player
         {
             StateMachine.Controller.Move((StateMachine.ForceReceiver.Movement + motion) * deltaTime);
         }
+
+        protected void FaceTarget()
+        {
+            if (StateMachine.Targeter.CurrentTarget == null) return;
+
+            var lookPos =
+                StateMachine.Targeter.CurrentTarget.transform.position - StateMachine.transform.position;
+            lookPos.y = 0;
+
+            StateMachine.transform.rotation = Quaternion.LookRotation(lookPos);
+        }
     }
 }
 

@@ -57,29 +57,11 @@ namespace StateMachines.Player
             var targeter = StateMachine.Targeter;
             if (!targeter.SelectTarget()) return;
 
-            switch (targeter.isLockedOn)
+            if (targeter.isLockedOn == false)
             {
-                case false:
-                    targeter.isLockedOn = true;
-                    StateMachine.SwitchState(new PlayerTargetingState(StateMachine));
-                    break;
-                case true:
-                    targeter.isLockedOn = false;
-                    break;
+                targeter.isLockedOn = true;
+                StateMachine.SwitchState(new PlayerTargetingState(StateMachine));
             }
-
-            // if (!StateMachine.Targeter.SelectTarget()) return;
-            //
-            // switch (_isLockedOn)
-            // {
-            //     case false:
-            //         StateMachine.SwitchState(new PlayerTargetingState(StateMachine));
-            //         _isLockedOn = true;
-            //         break;
-            //     case true:
-            //         _isLockedOn = false;
-            //         break;
-            // }
         }
 
         private Vector3 CalculateMovement()

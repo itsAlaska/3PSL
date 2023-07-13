@@ -6,7 +6,7 @@ namespace StateMachines.Player
     public class PlayerTargetingState : PlayerBaseState
     {
         private readonly int _targetingBlendTreeHash = Animator.StringToHash("TargetingBlendTree");
-        
+
         public PlayerTargetingState(PlayerStateMachine stateMachine) : base(stateMachine)
         {
         }
@@ -14,14 +14,24 @@ namespace StateMachines.Player
         public override void Enter()
         {
             StateMachine.InputReader.ToggleTargetEvent += OnCancel;
-            
+
             StateMachine.Animator.Play(_targetingBlendTreeHash);
         }
 
         public override void Tick(float deltaTime)
         {
-            if (StateMachine.Targeter.CurrentTarget != null) return;
-            StateMachine.SwitchState(new PlayerFreeLookState(StateMachine));
+            if (StateMachine.Targeter.CurrentTarget == null)
+            {
+                StateMachine.SwitchState(new PlayerFreeLookState(StateMachine));
+                StateMachine.Targeter.isLockedOn = false;
+                return;
+            }
+
+            var movement = CalculateMovement();
+            Move(movement * (StateMachine.TargetingMovementSpeed * StateMachine.InputReader.MovementValue.magnitude),
+                deltaTime);
+
+            FaceTarget();
         }
 
         public override void Exit()
@@ -34,16 +44,22 @@ namespace StateMachines.Player
             var targeter = StateMachine.Targeter;
             targeter.Cancel();
 
-            switch (targeter.isLockedOn)
+            if (targeter.isLockedOn == true)
             {
-                case true:
-                    targeter.isLockedOn = false;
-                    StateMachine.SwitchState(new PlayerFreeLookState(StateMachine));
-                    break;
-                case false:
-                    targeter.isLockedOn = true;
-                    break;
+                targeter.isLockedOn = false;
+                StateMachine.SwitchState(new PlayerFreeLookState(StateMachine));
             }
+        }
+
+        private Vector3 CalculateMovement()
+        {
+            var movement = new Vector3();
+            var transform = StateMachine.transform;
+
+            movement += transform.right * StateMachine.InputReader.MovementValue.x;
+            movement += transform.forward * StateMachine.InputReader.MovementValue.y;
+
+            return movement;
         }
     }
 }
