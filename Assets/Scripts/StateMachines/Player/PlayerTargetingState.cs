@@ -20,7 +20,8 @@ namespace StateMachines.Player
 
         public override void Tick(float deltaTime)
         {
-            
+            if (StateMachine.Targeter.CurrentTarget != null) return;
+            StateMachine.SwitchState(new PlayerFreeLookState(StateMachine));
         }
 
         public override void Exit()
