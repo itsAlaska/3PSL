@@ -5,6 +5,8 @@ namespace StateMachines.Player
 {
     public class PlayerTargetingState : PlayerBaseState
     {
+        private readonly int _targetingBlendTreeHash = Animator.StringToHash("TargetingBlendTree");
+        
         public PlayerTargetingState(PlayerStateMachine stateMachine) : base(stateMachine)
         {
         }
@@ -12,6 +14,8 @@ namespace StateMachines.Player
         public override void Enter()
         {
             StateMachine.InputReader.ToggleTargetEvent += OnCancel;
+            
+            StateMachine.Animator.Play(_targetingBlendTreeHash);
         }
 
         public override void Tick(float deltaTime)
