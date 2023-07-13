@@ -8,8 +8,6 @@ namespace StateMachines.Player
 
         private const float AnimatorDampTime = 0.1f;
 
-        private bool _isLockedOn;
-
         public PlayerFreeLookState(PlayerStateMachine stateMachine) : base(stateMachine)
         {
         }
@@ -37,7 +35,6 @@ namespace StateMachines.Player
                 else
                     StateMachine.Animator.SetFloat(_freeLookSpeedHash, 0, AnimatorDampTime, deltaTime);
 
-                Debug.Log($"In Vector2.zero:\n{StateMachine.Animator.GetFloat(_freeLookSpeedHash)}");
                 return;
             }
 
@@ -45,7 +42,6 @@ namespace StateMachines.Player
             StateMachine.Animator.SetFloat(_freeLookSpeedHash, movementValue.magnitude, AnimatorDampTime,
                 deltaTime);
             FaceMovementDirection(movement, deltaTime);
-            Debug.Log(StateMachine.Animator.GetFloat(_freeLookSpeedHash));
         }
 
 
@@ -56,16 +52,32 @@ namespace StateMachines.Player
 
         private void OnTarget()
         {
-            switch (_isLockedOn)
+            var targeter = StateMachine.Targeter;
+            if (!targeter.SelectTarget()) return;
+
+            switch (targeter.isLockedOn)
             {
                 case false:
+                    targeter.isLockedOn = true;
                     StateMachine.SwitchState(new PlayerTargetingState(StateMachine));
-                    _isLockedOn = true;
                     break;
                 case true:
-                    _isLockedOn = false;
+                    targeter.isLockedOn = false;
                     break;
             }
+
+            // if (!StateMachine.Targeter.SelectTarget()) return;
+            //
+            // switch (_isLockedOn)
+            // {
+            //     case false:
+            //         StateMachine.SwitchState(new PlayerTargetingState(StateMachine));
+            //         _isLockedOn = true;
+            //         break;
+            //     case true:
+            //         _isLockedOn = false;
+            //         break;
+            // }
         }
 
         private Vector3 CalculateMovement()

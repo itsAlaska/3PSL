@@ -1,10 +1,10 @@
 using Unity.VisualScripting;
+using UnityEngine;
 
 namespace StateMachines.Player
 {
     public class PlayerTargetingState : PlayerBaseState
     {
-        private bool _isLockedOn = true;
         public PlayerTargetingState(PlayerStateMachine stateMachine) : base(stateMachine)
         {
         }
@@ -26,14 +26,17 @@ namespace StateMachines.Player
 
         private void OnCancel()
         {
-            switch (_isLockedOn)
+            var targeter = StateMachine.Targeter;
+            targeter.Cancel();
+
+            switch (targeter.isLockedOn)
             {
                 case true:
-                    _isLockedOn = false;
+                    targeter.isLockedOn = false;
                     StateMachine.SwitchState(new PlayerFreeLookState(StateMachine));
                     break;
                 case false:
-                    _isLockedOn = true;
+                    targeter.isLockedOn = true;
                     break;
             }
         }

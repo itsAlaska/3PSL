@@ -175,8 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e32afaac281c96d40818dbd75ff77831, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targets: []
-  targetingShader: {fileID: 2100000, guid: 3c1a546a669b8504ca61653fd103d8f0, type: 2}
+  isLockedOn: 0
 --- !u!135 &6015842220999504394
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -814,6 +813,7 @@ MonoBehaviour:
   <InputReader>k__BackingField: {fileID: 4524113198790202188}
   <Controller>k__BackingField: {fileID: 1519828396993990846}
   <Animator>k__BackingField: {fileID: 8342663378432114538}
+  <Targeter>k__BackingField: {fileID: 8384769686171628142}
   <FreeLookMovementSpeed>k__BackingField: 6
   <RotationDamping>k__BackingField: 10
 --- !u!114 &4524113198790202188

@@ -1,32 +1,47 @@
+using System;
 using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Combat.Targeting
 {
     public class Targeter : MonoBehaviour
     {
-        public List<Target> targets = new();
+        private readonly List<Target> _targets = new();
+        public Target CurrentTarget { get; private set; }
 
-        [SerializeField] private Material inRangeShader;
-        [SerializeField] private Material targetedShader;
+        public bool isLockedOn;
+
+        private void Reset()
+        {
+            throw new NotImplementedException();
+        }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent<Target>(out var target))
-            {
-                targets.Add(target);
-                other.gameObject.layer = 6;
-            }
+            if (!other.TryGetComponent<Target>(out var target)) return;
+            _targets.Add(target);
+            other.gameObject.layer = 6;
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.TryGetComponent<Target>(out var target))
-            {
-                targets.Remove(target);
-                other.gameObject.layer = 0;
-            }
+            if (!other.TryGetComponent<Target>(out var target)) return;
+            _targets.Remove(target);
+            other.gameObject.layer = 0;
+        }
+
+        public bool SelectTarget()
+        {
+            if (_targets.Count == 0) return false;
+
+            CurrentTarget = _targets[0];
+            return true;
+        }
+
+        public void Cancel()
+        {
+            CurrentTarget = null;
         }
     }
 }
