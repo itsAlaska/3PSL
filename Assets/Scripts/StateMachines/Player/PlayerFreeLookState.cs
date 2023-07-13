@@ -8,12 +8,15 @@ namespace StateMachines.Player
 
         private const float AnimatorDampTime = 0.1f;
 
+        private bool _isLockedOn;
+
         public PlayerFreeLookState(PlayerStateMachine stateMachine) : base(stateMachine)
         {
         }
 
         public override void Enter()
         {
+            StateMachine.InputReader.ToggleTargetEvent += OnTarget;
         }
 
         public override void Tick(float deltaTime)
@@ -30,18 +33,14 @@ namespace StateMachines.Player
                 const float threshold = 0.001f;
 
                 if (Mathf.Abs(currentValue) < threshold)
-                {
                     StateMachine.Animator.SetFloat(_freeLookSpeedHash, 0);
-                }
                 else
-                {
                     StateMachine.Animator.SetFloat(_freeLookSpeedHash, 0, AnimatorDampTime, deltaTime);
-                }
-                
+
                 Debug.Log($"In Vector2.zero:\n{StateMachine.Animator.GetFloat(_freeLookSpeedHash)}");
                 return;
             }
-            
+
 
             StateMachine.Animator.SetFloat(_freeLookSpeedHash, movementValue.magnitude, AnimatorDampTime,
                 deltaTime);
@@ -52,6 +51,21 @@ namespace StateMachines.Player
 
         public override void Exit()
         {
+            StateMachine.InputReader.ToggleTargetEvent -= OnTarget;
+        }
+
+        private void OnTarget()
+        {
+            switch (_isLockedOn)
+            {
+                case false:
+                    StateMachine.SwitchState(new PlayerTargetingState(StateMachine));
+                    _isLockedOn = true;
+                    break;
+                case true:
+                    _isLockedOn = false;
+                    break;
+            }
         }
 
         private Vector3 CalculateMovement()
@@ -72,7 +86,7 @@ namespace StateMachines.Player
         private void FaceMovementDirection(Vector3 movement, float deltaTime)
         {
             StateMachine.transform.rotation =
-                Quaternion.Lerp(StateMachine.transform.rotation, 
+                Quaternion.Lerp(StateMachine.transform.rotation,
                     Quaternion.LookRotation(movement),
                     deltaTime * StateMachine.RotationDamping);
         }

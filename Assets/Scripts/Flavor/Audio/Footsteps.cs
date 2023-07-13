@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Audio
+namespace Flavor
 {
     public class Footsteps : MonoBehaviour
     {

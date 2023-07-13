@@ -1,19 +1,22 @@
-using System;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Combat.Targeting
 {
     public class Targeter : MonoBehaviour
     {
-        public List<Target> targets = new List<Target>();
+        public List<Target> targets = new();
+
+        [SerializeField] private Material inRangeShader;
+        [SerializeField] private Material targetedShader;
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent<Target>(out var target))
             {
                 targets.Add(target);
+                other.gameObject.layer = 6;
             }
         }
 
@@ -22,6 +25,7 @@ namespace Combat.Targeting
             if (other.TryGetComponent<Target>(out var target))
             {
                 targets.Remove(target);
+                other.gameObject.layer = 0;
             }
         }
     }
