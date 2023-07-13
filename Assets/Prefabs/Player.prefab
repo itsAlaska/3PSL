@@ -175,6 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e32afaac281c96d40818dbd75ff77831, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cineTargetGroup: {fileID: 0}
   isLockedOn: 0
 --- !u!135 &6015842220999504394
 SphereCollider:
@@ -751,6 +752,7 @@ GameObject:
   - component: {fileID: 1519828396993990846}
   - component: {fileID: 7365814630084033939}
   - component: {fileID: 1130511248068255483}
+  - component: {fileID: 6512177147902841604}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -814,6 +816,7 @@ MonoBehaviour:
   <Controller>k__BackingField: {fileID: 1519828396993990846}
   <Animator>k__BackingField: {fileID: 8342663378432114538}
   <Targeter>k__BackingField: {fileID: 8384769686171628142}
+  <ForceReceiver>k__BackingField: {fileID: 6512177147902841604}
   <FreeLookMovementSpeed>k__BackingField: 6
   <RotationDamping>k__BackingField: 10
 --- !u!114 &4524113198790202188
@@ -963,6 +966,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   footstepSound: {fileID: 7365814630084033939}
+--- !u!114 &6512177147902841604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4142737761780435928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ed3552386aa8c043b275c560123d5a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 1519828396993990846}
 --- !u!1 &4394235834280065039
 GameObject:
   m_ObjectHideFlags: 0

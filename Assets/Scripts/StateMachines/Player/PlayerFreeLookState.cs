@@ -24,9 +24,8 @@ namespace StateMachines.Player
         {
             var movementValue = StateMachine.InputReader.MovementValue;
             var movement = CalculateMovement();
-
-            StateMachine.Controller.Move(movement * (StateMachine.FreeLookMovementSpeed * movementValue.magnitude) *
-                                         deltaTime);
+            
+            Move(movement * (StateMachine.FreeLookMovementSpeed * movementValue.magnitude), deltaTime);
 
             if (StateMachine.InputReader.MovementValue == Vector2.zero)
             {

@@ -1,3 +1,7 @@
+
+
+using UnityEngine;
+
 namespace StateMachines.Player
 {
     public abstract class PlayerBaseState : State
@@ -10,6 +14,11 @@ namespace StateMachines.Player
         public PlayerBaseState(PlayerStateMachine stateMachine)
         {
             StateMachine = stateMachine;
+        }
+
+        protected void Move(Vector3 motion, float deltaTime)
+        {
+            StateMachine.Controller.Move((StateMachine.ForceReceiver.Movement + motion) * deltaTime);
         }
     }
 }
