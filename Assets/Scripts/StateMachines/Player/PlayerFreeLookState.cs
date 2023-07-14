@@ -22,6 +22,12 @@ namespace StateMachines.Player
 
         public override void Tick(float deltaTime)
         {
+            if (StateMachine.InputReader.IsAttacking)
+            {
+                StateMachine.SwitchState(new PlayerAttackingState(StateMachine, 0));
+                return;
+            }
+            
             var movementValue = StateMachine.InputReader.MovementValue;
             var movement = CalculateMovement();
             
