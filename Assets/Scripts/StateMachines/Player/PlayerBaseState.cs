@@ -28,10 +28,12 @@ namespace StateMachines.Player
 
         protected void FaceTarget()
         {
-            if (StateMachine.Targeter.CurrentTarget == null) return;
-
+            // if (StateMachine.Targeter.CurrentTarget == null) return;
+            if (StateMachine.Targeter.Targets.Count == 0) return;
+            
             var lookPos =
-                StateMachine.Targeter.CurrentTarget.transform.position - StateMachine.transform.position;
+                // StateMachine.Targeter.CurrentTarget.transform.position - StateMachine.transform.position;
+                StateMachine.Targeter.Targets[0].transform.position - StateMachine.transform.position;
             lookPos.y = 0;
 
             StateMachine.transform.rotation = Quaternion.LookRotation(lookPos);
