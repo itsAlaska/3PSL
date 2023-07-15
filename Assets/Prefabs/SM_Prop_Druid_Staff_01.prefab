@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 421702}
   - component: {fileID: 3336824}
   - component: {fileID: 2362008}
+  - component: {fileID: 7092717677518873124}
   m_Layer: 0
   m_Name: SM_Prop_Druid_Staff_01
   m_TagString: Untagged
@@ -34,7 +35,7 @@ Transform:
   - {fileID: 5478783522125041662}
   - {fileID: 166945473091619475}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3336824
 MeshFilter:
@@ -86,6 +87,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7092717677518873124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 164332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1461c3506f89b04a9cc9a1d9c63b9ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 1619895861088479408, guid: 57a31ef3b2c77fa4d8d9deed993dfb7e,
+    type: 3}
+  target: {fileID: 0}
+  launchSpeed: 10
 --- !u!1001 &2715348913799869707
 PrefabInstance:
   m_ObjectHideFlags: 0

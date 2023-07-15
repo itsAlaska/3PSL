@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 8477798677784289836}
   - component: {fileID: 1998718559552745776}
   - component: {fileID: 661253913188590914}
-  - component: {fileID: 5672998333229278334}
+  - component: {fileID: 2113022822715671121}
+  - component: {fileID: 2626002044532862249}
   m_Layer: 0
-  m_Name: Wisp 1
+  m_Name: WispProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,12 +31,12 @@ Transform:
   m_LocalRotation: {x: 0.00000005960463, y: -0.000000014901158, z: -0.000000029802315,
     w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5587964607226475741}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8477798677784289836
 MeshFilter:
@@ -108,7 +109,34 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5672998333229278334
+--- !u!54 &2113022822715671121
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1619895861088479408}
+  serializedVersion: 4
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &2626002044532862249
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,17 +145,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1619895861088479408}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d818d248e3daf23458c432abd079d7be, type: 3}
+  m_Script: {fileID: 11500000, guid: 30c01c93631ca974f8ce9e2b0438edd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointA: {x: 5, y: 5, z: 5}
-  pointB: {x: 20, y: 20, z: 20}
-  minXTravelTime: 0.25
-  maxXTravelTime: 3
-  minYTravelTime: 0.25
-  maxYTravelTime: 3
-  minZTravelTime: 0.25
-  maxZTravelTime: 3
+  speed: 10
 --- !u!1 &6829560704209989904
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,7 +175,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6829560704209989904}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.09, y: -0.07, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -739,7 +760,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.1
+      scalar: 0.5
       minScalar: 0.01
       maxCurve:
         serializedVersion: 2
@@ -879,7 +900,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.29
+      value: 0.56
       mode: 0
       spread: 0
       speed:
@@ -998,7 +1019,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 50
+      scalar: 0
       minScalar: 10
       maxCurve:
         serializedVersion: 2

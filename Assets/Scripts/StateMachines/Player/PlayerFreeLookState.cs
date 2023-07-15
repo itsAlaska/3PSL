@@ -24,6 +24,7 @@ namespace StateMachines.Player
         {
             if (StateMachine.InputReader.IsAttacking)
             {
+                FaceTarget();
                 StateMachine.SwitchState(new PlayerAttackingState(StateMachine, 0));
                 return;
             }

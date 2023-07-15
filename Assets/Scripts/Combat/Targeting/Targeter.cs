@@ -10,7 +10,7 @@ namespace Combat.Targeting
         [SerializeField] private CinemachineTargetGroup cineTargetGroup;
 
         private Camera _mainCamera;
-        private readonly List<Target> _targets = new();
+        public List<Target> Targets { get; private set; } = new();
         public Target CurrentTarget { get; private set; }
 
         public bool isLockedOn;
@@ -29,7 +29,7 @@ namespace Combat.Targeting
         {
             if (!other.TryGetComponent<Target>(out var target)) return;
 
-            _targets.Add(target);
+            Targets.Add(target);
             other.gameObject.layer = 6;
             target.DestroyedEvent += RemoveTarget;
         }
@@ -38,19 +38,19 @@ namespace Combat.Targeting
         {
             if (!other.TryGetComponent<Target>(out var target)) return;
 
-            _targets.Remove(target);
+            Targets.Remove(target);
             other.gameObject.layer = 0;
             RemoveTarget(target);
         }
 
         public bool SelectTarget()
         {
-            if (_targets.Count == 0) return false;
+            if (Targets.Count == 0) return false;
             
             Target closestTarget = null;
             var closestTargetDistance = Mathf.Infinity;
             
-            foreach (var target in _targets)
+            foreach (var target in Targets)
             {
                 Vector2 viewPos = _mainCamera.WorldToViewportPoint(target.transform.position);
                 
