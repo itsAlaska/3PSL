@@ -818,8 +818,14 @@ MonoBehaviour:
   <Targeter>k__BackingField: {fileID: 8384769686171628142}
   <ForceReceiver>k__BackingField: {fileID: 6512177147902841604}
   <Attacks>k__BackingField:
-  - <AnimationName>k__BackingField: ComboAttack
-  - <AnimationName>k__BackingField: SpinAttack
+  - <AnimationName>k__BackingField: Attack1
+    <TransitionDuration>k__BackingField: 0.1
+    <ComboStateIndex>k__BackingField: 1
+    <ComboAttackTime>k__BackingField: 0.9
+  - <AnimationName>k__BackingField: Attack2
+    <TransitionDuration>k__BackingField: 0.1
+    <ComboStateIndex>k__BackingField: -1
+    <ComboAttackTime>k__BackingField: 0.9
   <FreeLookMovementSpeed>k__BackingField: 6
   <TargetingMovementSpeed>k__BackingField: 5
   <RotationDamping>k__BackingField: 10
@@ -2090,18 +2096,6 @@ PrefabInstance:
     - target: {fileID: 421702, guid: 12caa982699ea3b41a15a260d90f16a0, type: 3}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 421702, guid: 12caa982699ea3b41a15a260d90f16a0, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 421702, guid: 12caa982699ea3b41a15a260d90f16a0, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 421702, guid: 12caa982699ea3b41a15a260d90f16a0, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 421702, guid: 12caa982699ea3b41a15a260d90f16a0, type: 3}
       propertyPath: m_LocalPosition.x

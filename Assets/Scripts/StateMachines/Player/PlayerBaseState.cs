@@ -16,6 +16,11 @@ namespace StateMachines.Player
             StateMachine = stateMachine;
         }
 
+        protected void Move(float deltaTime)
+        {
+            Move(Vector3.zero, deltaTime);
+        }
+        
         protected void Move(Vector3 motion, float deltaTime)
         {
             StateMachine.Controller.Move((StateMachine.ForceReceiver.Movement + motion) * deltaTime);
