@@ -57,7 +57,7 @@ namespace Flavor.Visual
             // Rotate the object around the current rotation axis
             transform.Rotate(rotationAxis, rotationAmount, Space.World);
         }
-
+    
         private Quaternion SmoothDamp(Quaternion current, Quaternion target, ref Quaternion currentVelocity,
             float smoothTime, float damping)
         {

@@ -83,8 +83,6 @@ namespace StateMachines.Player
             var currentForwardValue = animator.GetFloat(_targetingForwardHash);
             var currentRightValue = animator.GetFloat(_targetingForwardHash);
             const float threshold = 0.001f;
-            Debug.Log($"movementValue.y: {movementValue.y}");
-            Debug.Log($"movementValue.x: {movementValue.x}");
 
             if (movementValue.y == 0)
             {

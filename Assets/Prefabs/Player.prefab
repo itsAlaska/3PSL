@@ -823,11 +823,16 @@ MonoBehaviour:
     <TransitionDuration>k__BackingField: 0.1
     <ComboStateIndex>k__BackingField: 1
     <ComboAttackTime>k__BackingField: 0.9
+    <ForceTime>k__BackingField: 0.35
+    <Force>k__BackingField: 15
   - <AnimationName>k__BackingField: Attack2
     <TransitionDuration>k__BackingField: 0.1
-    <ComboStateIndex>k__BackingField: -1
+    <ComboStateIndex>k__BackingField: 0
     <ComboAttackTime>k__BackingField: 0.9
+    <ForceTime>k__BackingField: 0.35
+    <Force>k__BackingField: 15
   <FreeLookMovementSpeed>k__BackingField: 6
+  <FreeLookSpeedReduction>k__BackingField: 0
   <TargetingMovementSpeed>k__BackingField: 5
   <RotationDamping>k__BackingField: 10
 --- !u!114 &4524113198790202188
@@ -990,6 +995,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 1519828396993990846}
+  drag: 0.1
 --- !u!114 &8165246576897755962
 MonoBehaviour:
   m_ObjectHideFlags: 0
