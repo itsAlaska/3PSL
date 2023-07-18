@@ -5,6 +5,10 @@ namespace StateMachines.Player
 {
     public class PlayerAttackingState : PlayerBaseState
     {
+        private readonly int _freeLookForwardHash = Animator.StringToHash("FreeLookForwardSpeed");
+        private readonly int _freeLookRightHash = Animator.StringToHash("FreeLookRightSpeed");
+        private const float AnimatorDampTime = 0.1f;
+        
         private float _previousFrameTime;
         private bool _alreadyAppliedForce;
 
@@ -18,7 +22,7 @@ namespace StateMachines.Player
         public override void Enter()
         {
             StateMachine.Animator.SetLayerWeight(1, 1);
-            StateMachine.Animator.CrossFadeInFixedTime(_attack.AnimationName, _attack.TransitionDuration);
+            StateMachine.Animator.CrossFadeInFixedTime(_attack.AnimationName, _attack.TransitionDuration, 1);
         }
 
         public override void Tick(float deltaTime)
@@ -29,6 +33,7 @@ namespace StateMachines.Player
             
             Move(movement * (movementSpeed * movementValue.magnitude), deltaTime);
             // Move(deltaTime);
+            FaceCameraDirection(StateMachine.MainCameraTransform.forward, deltaTime);
             FaceTarget();
 
             var normalizedTime = GetNormalizedTime();
@@ -52,7 +57,7 @@ namespace StateMachines.Player
 
             _previousFrameTime = normalizedTime;
             
-            FaceCameraDirection(StateMachine.MainCameraTransform.forward, deltaTime);
+            UpdateAnimator(deltaTime);
         }
 
         public override void Exit()
@@ -62,13 +67,13 @@ namespace StateMachines.Player
 
         private float GetNormalizedTime()
         {
-            var currentInfo = StateMachine.Animator.GetCurrentAnimatorStateInfo(0);
-            var nextInfo = StateMachine.Animator.GetNextAnimatorStateInfo(0);
+            var currentInfo = StateMachine.Animator.GetCurrentAnimatorStateInfo(1);
+            var nextInfo = StateMachine.Animator.GetNextAnimatorStateInfo(1);
 
-            if (StateMachine.Animator.IsInTransition(0) && nextInfo.IsTag("Attack"))
+            if (StateMachine.Animator.IsInTransition(1) && nextInfo.IsTag("Attack"))
                 return nextInfo.normalizedTime;
 
-            if (!StateMachine.Animator.IsInTransition(0) && currentInfo.IsTag("Attack"))
+            if (!StateMachine.Animator.IsInTransition(1) && currentInfo.IsTag("Attack"))
                 return currentInfo.normalizedTime;
 
             return 0;
@@ -118,6 +123,35 @@ namespace StateMachines.Player
                 Quaternion.Lerp(StateMachine.transform.rotation,
                     Quaternion.LookRotation(direction),
                     deltaTime * StateMachine.RotationDamping);
+        }
+        
+        private void UpdateAnimator(float deltaTime)
+        {
+            var animator = StateMachine.Animator;
+            var movementValue = StateMachine.InputReader.MovementValue;
+            var currentForwardValue = animator.GetFloat(_freeLookForwardHash);
+            var currentRightValue = animator.GetFloat(_freeLookRightHash);
+            const float threshold = 0.001f;
+
+            if (movementValue.y == 0)
+            {
+                if (Mathf.Abs(currentForwardValue) < threshold) animator.SetFloat(_freeLookForwardHash, 0);
+                else animator.SetFloat(_freeLookForwardHash, 0, AnimatorDampTime, deltaTime);
+            }
+            else
+            {
+                animator.SetFloat(_freeLookForwardHash, movementValue.y, AnimatorDampTime, deltaTime);
+            }
+
+            if (movementValue.x == 0)
+            {
+                if (Mathf.Abs(currentRightValue) < threshold) animator.SetFloat(_freeLookRightHash, 0);
+                else animator.SetFloat(_freeLookRightHash, 0, AnimatorDampTime, deltaTime);
+            }
+            else
+            {
+                animator.SetFloat(_freeLookRightHash, movementValue.x, AnimatorDampTime, deltaTime);
+            }
         }
     }
 }
